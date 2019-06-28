@@ -75,7 +75,6 @@ export default {
             data: this.form
             // }).then(res => {
           }).then(({ data: { data, meta } }) => {
-            console.log();
             if (meta.status === 200) {
               // 登录成功服务器会返回一个token，保存到本地
               // 说明拿到了form对象中的username和password，将form对象的值存储到localstorage
