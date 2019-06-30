@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <!-- <div id="nav"> -->
-    <!-- <router-link to="/">123</router-link> -->
-    <router-view/>
-    <!-- </div> -->
+    <router-view />
   </div>
 </template>
 
-<style lang="less">
+<script>
+export default {};
+</script>
+
+<style>
 #app {
   height: 100%;
 }
