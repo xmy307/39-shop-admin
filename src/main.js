@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import axios from "axios";
 
 import ElementUI from 'element-ui';
 
@@ -8,6 +9,28 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/index.css';
 
 Vue.use(ElementUI);
+
+// 全局axios默认值//参考github
+axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/';
+
+// 通过default给axios设置一个默认的拦截器
+axios.interceptors.request.use(function (config) {
+  // Do something before request is sent
+  config.headers.Authorization = localStorage.getItem("token")
+  return config;
+});
+
+// Add a response interceptor
+// axios.interceptors.response.use(function (response) {
+//   // Do something with response data
+//   return response;
+// }, function (error) {
+//   // Do something with response error
+//   return Promise.reject(error);
+// });
+
+// 把axios加到Vue的原型上
+Vue.prototype.$http = axios
 
 Vue.config.productionTip = false;
 // 注册一个导航守卫

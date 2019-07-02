@@ -10,7 +10,6 @@
           class="login-model"
           label-position="top"
         >
-          <!-- <el-form ref="form" :model="form" label-width="80px" class="login-model"> -->
           <el-form-item label="用户名" prop="username">
             <el-input v-model="form.username"></el-input>
           </el-form-item>
@@ -21,7 +20,6 @@
             <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
             <el-button>取消</el-button>
           </el-form-item>
-          <!-- </el-form> -->
         </el-form>
       </div>
     </el-col>
@@ -61,36 +59,46 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
+    async submitForm(formName) {
       // this.$refs[formName] 这个就获取到表单的对象
       // 通过调用validate方法，可以对表单做整体的校验
       // validate函数接收的参数就是一个函数
       // valid形参接收到的就是表单校验的结果，表单校验成功则为true， 不成功则为false
-      this.$refs[formName].validate(valid => {
-        // 发送axios请求
-        if (valid) {
-          axios({
-            url: "http://localhost:8888/api/private/v1/login",
+      let valid = await this.$refs[formName].validate();
+      // 发送axios请求
+      if (valid) {
+        try {
+          let {
+            data: { data, meta }
+          } = await axios({
+            url: "login",
             method: "post",
             data: this.form
-            // }).then(res => {
-          }).then(({ data: { data, meta } }) => {
-            if (meta.status === 200) {
-              // 登录成功服务器会返回一个token，保存到本地
-              // 说明拿到了form对象中的username和password，将form对象的值存储到localstorage
-              localStorage.setItem("token", data.token);
-
-              // 登录成功后跳转至home页
-              this.$router.push("./home");
-            }
-            console.log(data);
-            // console.log(res);
           });
-        } else {
-          // console.log("error submit!!");
-          return false;
+          if (meta.status === 200) {
+            // 登录成功服务器会返回一个token，保存到本地
+            // 说明拿到了form对象中的username和password，将form对象的值存储到localstorage
+            localStorage.setItem("token", data.token);
+
+            // 登录成功后跳转至home页
+            this.$router.push("./home");
+          }
+        } catch (err) {
+          console.log("请求发送失败", err);
         }
-      });
+
+        // axios({
+
+        //   // }).then(res => {
+        // }).then(({ data: { data, meta } }) => {
+
+        //   console.log(data);
+        //   // console.log(res);
+        // });
+      } else {
+        // console.log("error submit!!");
+        return false;
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
