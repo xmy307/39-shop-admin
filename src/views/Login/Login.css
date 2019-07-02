@@ -1,0 +1,11 @@
+.row-bg {
+  background-color: #2d434c;
+  height: 100%;
+}
+
+.login-model {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 40px 20px;
+  min-width: 400px;
+}

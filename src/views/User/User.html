@@ -1,0 +1,90 @@
+  <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户详情</el-breadcrumb-item>
+    </el-breadcrumb>
+
+    <!-- 搜索框 -->
+    <el-row>
+      <el-col :span="8">
+        <div>
+          <el-input placeholder="请输入内容" v-model="query" @keyup.enter.native="search">
+            <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+          </el-input>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <el-button type="success" plain @click="openAddUserModel">添加用户</el-button>
+      </el-col>
+    </el-row>
+
+    <!-- 用户列表 -->
+    <el-table :data="userList" stripe style="width: 100%">
+      <el-table-column prop="username" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
+      <el-table-column prop="mobile" label="电话"></el-table-column>
+      <el-table-column label="用户状态">
+        <!-- 解构出row -->
+        <template v-slot="{row}">
+          <el-switch v-model="row.mg_state" active-color="#409EFF" inactive-color="#C0CCDA" @change="statusUser(row)">
+          </el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template v-slot="{row}">
+          <el-button type="primary" plain size="mini" icon="el-icon-edit" @click="openEditModel(row.id)"></el-button>
+          <el-button type="danger" plain size="mini" icon="el-icon-delete" @click="delUser(row.id)"></el-button>
+          <el-button type="success" plain size="mini">
+            <i class="el-icon-check"></i>分配角色
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <!-- 分页 -->
+    <el-pagination background layout="prev, pager, next" :total="total" :page-size="pagesize"
+      :current-page="currentpage" @current-change="onPageChange"></el-pagination>
+
+    <!-- 添加用户的模态框 -->
+    <!-- 模态框关闭时，重置表单  使用方法模态框关闭的方法close+表单的重置方法 -->
+    <el-dialog title="添加用户" :visible.sync="isAddUserModel" @close="$refs.ruleForm.resetFields()">
+      <el-form :model="addUserFormData" label-width="100px" :rules="addRules" ref="ruleForm">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="addUserFormData.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="addUserFormData.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="addUserFormData.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="手机" prop="mobile">
+          <el-input v-model="addUserFormData.mobile" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="isAddUserModel = false">取 消</el-button>
+        <el-button type="primary" @click="addUser">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 修改用户的模态框 -->
+    <el-dialog title="修改用户信息" :visible.sync="isEditUserModel" @close="$refs.ruleForm.resetFields()">
+      <el-form :model="editUserFormData" label-width="100px" :rules="editRules" ref="ruleForm">
+        <el-form-item label="用户名" prop="username">
+          <el-tag type="info" v-text="editUserFormData.username"></el-tag>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="editUserFormData.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="手机" prop="mobile">
+          <el-input v-model="editUserFormData.mobile" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="isEditUserModel = false">取 消</el-button>
+        <el-button type="primary" @click="editUser">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
