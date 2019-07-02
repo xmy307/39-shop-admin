@@ -325,8 +325,14 @@ export default {
           });
           this.getAxios();
           this.isEditUserModel = false;
+        } else {
+          this.$message({
+            type: "error",
+            message: res.data.meta.msg,
+            duration: 1000
+          });
         }
-      } catch {}
+      } catch (err) {}
     }
   }
 };
