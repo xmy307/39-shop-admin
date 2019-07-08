@@ -4,6 +4,9 @@ import router from "./router";
 import axios from "axios";
 
 import ElementUI from 'element-ui';
+// 如果需要全局使用，可能很多页面里面都会用到这个组件，那么就把下面这两句代码放到main.js中
+// const ElTreeGrid = require('element-tree-grid');
+// Vue.component(ElTreeGrid.name, ElTreeGrid)
 
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/index.css';

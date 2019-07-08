@@ -1,5 +1,7 @@
 <template src="./template.html"></template>
 
-
-<style src="./style.css">
+<script src="./script.js">
+</script>
+<style src="./style.css" scoped>
 </style>
+

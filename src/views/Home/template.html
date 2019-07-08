@@ -11,10 +11,10 @@
             <h1>品优购后台管理系统</h1>
           </div>
         </el-col>
-        <el-col :span="6">
-          <div class="grid-content bg-purple vip">
+        <el-col :span="6" class="header-right">
+          <div>
             <span>欢迎上海前端39期星曜会员</span>
-            <a href="#">退出</a>
+            <a href="#" @click.prevent="logout">退出</a>
           </div>
         </el-col>
       </el-row>
@@ -23,72 +23,18 @@
       <el-aside width="200px">
         <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#545c64"
           text-color="#fff" active-text-color="#ffd04b" :unique-opened="true" :router="true">
-          <el-submenu index="1">
+          <!-- 从数据库中请求来的数据，动态添加的需要绑定，使用：但得来的是数字 需要加上'' 转换为字符串-->
+          <el-submenu :index="item1.id+''" v-for="item1 in menuList" :key="item1.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{item1.authName}}</span>
             </template>
-            <el-menu-item index="/user">
+            <el-menu-item :index="'/'+item2.path" v-for="item2 in item1.children">
               <i class="el-icon-menu"></i>
-              <span slot="title">用户列表</span>
+              <span slot="title">{{item2.authName}}</span>
             </el-menu-item>
           </el-submenu>
 
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="/role">
-              <i class="el-icon-menu"></i>
-              <span slot="title">角色列表</span>
-            </el-menu-item>
-            <el-menu-item index="1-4-1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">权限列表</span>
-            </el-menu-item>
-          </el-submenu>
-
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>商品管理</span>
-            </template>
-            <el-menu-item index="1-4-1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">商品列表</span>
-            </el-menu-item>
-            <el-menu-item index="1-4-1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">分类参数</span>
-            </el-menu-item>
-            <el-menu-item index="1-4-1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">商品分类</span>
-            </el-menu-item>
-          </el-submenu>
-
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>订单管理</span>
-            </template>
-            <el-menu-item index="1-4-1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">订单列表</span>
-            </el-menu-item>
-          </el-submenu>
-
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>数据统计</span>
-            </template>
-            <el-menu-item index="1-4-1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">数据报表</span>
-            </el-menu-item>
-          </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>

@@ -1,0 +1,79 @@
+<div>
+  <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item>权限管理</el-breadcrumb-item>
+    <el-breadcrumb-item>角色列表</el-breadcrumb-item>
+  </el-breadcrumb>
+
+  <!-- 角色列表 -->
+  <el-table :data="roleList" stripe style="width: 100%" ref="roleTable">
+    <el-table-column type="expand">
+      <template v-slot="{row}">
+        <el-row type="flex" v-for="level1 in row.children" :key="level1.id" class="level1">
+          <el-col :span="6">
+            <el-tag closable @close=deleteRight(row,level1.id)>
+              {{level1.authName}}
+            </el-tag>
+            <i class="el-icon-arrow-right"></i>
+          </el-col>
+          <el-col>
+            <el-row type="flex" v-for="level2 in level1.children" :key="level2.id" class="level2">
+              <el-col :span="6">
+                <el-tag closable type="success" @close=deleteRight(row,level2.id)>
+                  {{level2.authName}}
+                </el-tag>
+                <i class="el-icon-arrow-right"></i>
+              </el-col>
+              <el-col>
+                <!-- <el-row type="flex"> -->
+                <!-- <el-col :span="4" > -->
+                <el-tag closable type="warning" v-for="level3 in level2.children" :key="level3.id" class="level3"
+                  @close=deleteRight(row,level3.id)>
+                  {{level3.authName}}
+                </el-tag>
+                <!-- </el-col> -->
+                <!-- </el-row> -->
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+
+      </template>
+    </el-table-column>
+    <el-table-column type="index">
+    </el-table-column>
+    <el-table-column prop="roleName" label="角色名称" width="180"></el-table-column>
+    <el-table-column prop="roleDesc" label="描述" width="180"></el-table-column>
+
+    </el-table-column>
+    <el-table-column label="操作">
+      <!-- 页面一进来就发送了axios请求，将拿到的数据赋值给了 roleList数组，而table又绑定了数组roleList，template v-slot="{row}"就是从table中的绑定的data拿到数据，而row是每一行的数据，解构出来即拿到每行的数据
+      -->
+      <template v-slot="{row}">
+        <el-button type="primary" plain size="mini" icon="el-icon-edit"></el-button>
+        <el-button type="danger" plain size="mini" icon="el-icon-delete"></el-button>
+        <el-button type="success" plain size="mini" icon="el-icon-check" @click="isAssignRoleModel(row)">
+          分配权限
+        </el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+
+  <!-- 分配角色模态框 -->
+  <!-- 
+    default-expanded-keys 这是一个数组，表示默认让哪些节点展开 默认不展开，所以可以不要
+  default-checked-keys 这是一个数据，表示默认选中哪些节点 是数组，用于数据的回显，对应数组存储的是id
+  -->
+  <el-dialog title="角色授权" :visible.sync="isAssignRoleModelShow">
+    <el-form label-width="100px">
+      <el-tree :data="rightList" show-checkbox node-key="id" :default-checked-keys="checkedRights"
+        :default-expand-all="true" :props="defaultProps" ref="rightsTree">
+      </el-tree>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="isAssignRoleModelShow = false">取 消</el-button>
+      <el-button type="primary" @click="assignRole">确 定</el-button>
+    </div>
+  </el-dialog>
+
+</div>

@@ -3,6 +3,6 @@
 <script src="./User.js">
 </script>
 
-<style src="./User.css">
+<style src="./User.css" scoped>
 </style>
 

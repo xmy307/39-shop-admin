@@ -6,6 +6,6 @@
 
 
 
-<style src="./Login.css">
+<style src="./Login.css" scoped>
 </style>
 

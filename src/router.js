@@ -2,8 +2,11 @@ import Vue from "vue";
 import Router from "vue-router";
 import Login from "./views/Login/Login.vue";
 import Home from "./views/Home/Home.vue";
-import User from "./views/User/User.vue";
-import Role from "./views/Role/Role.vue"
+import User from "./views/Users/User.vue";
+import Roles from "./views/Roles/Role.vue"
+import Rights from "./views/Rights/Rights.vue"
+import Goods from "./views/Goods/Goods.vue"
+import Categories from "./views/Goods/Categories.vue"
 
 Vue.use(Router);
 
@@ -16,12 +19,24 @@ export default new Router({
       path: "/home",
       component: Home,
       children: [{
-          path: '/user',
+          path: '/users',
           component: User
         },
         {
-          path: '/role',
-          component: Role
+          path: '/roles',
+          component: Roles
+        },
+        {
+          path: '/rights',
+          component: Rights
+        },
+        {
+          path: '/goods',
+          component: Goods
+        },
+        {
+          path: '/categories',
+          component: Categories
         }
       ]
     },

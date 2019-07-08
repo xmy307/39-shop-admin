@@ -2932,6 +2932,11 @@ electron-to-chromium@^1.3.164:
   resolved "https://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.175.tgz#a269716af5e549f9f3989ae38ba484881dcb3702"
   integrity sha1-omlxavXlSfnzmJrji6SEiB3LNwI=
 
+element-tree-grid@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.npm.taobao.org/element-tree-grid/download/element-tree-grid-0.1.3.tgz#5cae79ce738f3b4e87072538bac672a32f1b0c33"
+  integrity sha1-XK55znOPO06HByU4usZyoy8bDDM=
+
 element-ui@^2.10.0:
   version "2.10.0"
   resolved "https://registry.npm.taobao.org/element-ui/download/element-ui-2.10.0.tgz#e6129f6b6d6ffe0dbad125a4a8d17d447a5f639c"
